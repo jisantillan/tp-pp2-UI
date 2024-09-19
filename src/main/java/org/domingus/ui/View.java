@@ -1,18 +1,32 @@
 package org.domingus.ui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
-public class View implements PropertyChangeListener {
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import org.domingus.interfaces.Notificable;
+
+public class View implements Notificable {
+	
     private JPanel messagePanel;
     private JScrollPane scrollPane;
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        showNotification("Nueva notificación: " + evt.getNewValue(), false);
-    }
 
     public void init() {
         JFrame frame = new JFrame("Domingus Chat");
@@ -28,7 +42,9 @@ public class View implements PropertyChangeListener {
 
         //Icon
         JLabel profileIcon = new JLabel() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
@@ -105,4 +121,12 @@ public class View implements PropertyChangeListener {
         // Hacer que el scroll baje automáticamente hasta el último mensaje
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
+
+
+    @Override
+	public void sendMessage(String message) {
+        //showNotification("Nueva notificación: " + message, false);
+        showNotification(message, false);
+	}
+
 }
