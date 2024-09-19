@@ -1,0 +1,10 @@
+{
+  "dataConfiguration": [
+    {
+      "name": "Aulas_UNGS",
+      "url": "http://www.ungs.com/aulas.pdf",
+      "date": "fecha"
+    }
+  ],
+  "timerInterval": 2000
+}
