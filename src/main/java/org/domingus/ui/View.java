@@ -1,21 +1,17 @@
 package org.domingus.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-import org.domingus.interfaces.Notificable;
+
+import org.domingus.interfaces.NotificationPlatform;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
 
-public class View implements Notificable {
+public class View implements NotificationPlatform {
 	
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
