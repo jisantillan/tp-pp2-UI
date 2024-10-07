@@ -19,7 +19,7 @@ public class DomingusUITest {
     	domingus.addObserver(view);
     	
     	try {
-    		domingus.init("src\\main\\resources\\extensions\\");
+    		domingus.init("src\\test\\resources\\extensions\\");
 		} catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException
 				| IllegalAccessException | InterruptedException | IOException e) {
 			e.printStackTrace();
