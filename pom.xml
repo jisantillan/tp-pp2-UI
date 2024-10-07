@@ -25,9 +25,9 @@
         <dependency>
             <groupId>com.github.jisantillan</groupId>
             <artifactId>tp-pp2-core</artifactId>
-            <version>main-dbbc62978b-1</version>
+            <version>main-c9adb4ec7c-1</version>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version>

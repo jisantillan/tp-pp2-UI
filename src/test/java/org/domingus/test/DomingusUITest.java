@@ -1,22 +1,25 @@
-package org.domingus;
+package org.domingus.test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.domingus.app.Domingus;
+import org.domingus.interfaces.Source;
 import org.domingus.ui.View;
 
-public class DomingusUI {
+public class DomingusUITest {
 	
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
     	
     	View view = new View();
     	view.init();
     	
-    	Domingus domingus = new Domingus();
+    	Source source = new SourceUIMock(1000);
+    	Domingus domingus = new Domingus(source);
     	domingus.addObserver(view);
+    	
     	try {
-			domingus.init(args);
+    		domingus.init("src\\test\\resources\\extensions\\");
 		} catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException
 				| IllegalAccessException | InterruptedException | IOException e) {
 			e.printStackTrace();
