@@ -6,12 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import org.domingus.interfaces.NotificationPlatform;
+
+import org.domingus.interfaces.Notifier;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
 
-public class View implements NotificationPlatform {
+public class View implements Notifier {
 	
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
@@ -49,7 +50,7 @@ public class View implements NotificationPlatform {
     }
 
     @Override
-	public void sendMessage(String message) {
+	public void notify(String message) {
         //showNotification("Nueva notificación: " + message, false);
         showNotification(message, false);
 	}
