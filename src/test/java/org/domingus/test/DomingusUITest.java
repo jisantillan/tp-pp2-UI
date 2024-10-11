@@ -1,29 +1,25 @@
 package org.domingus.test;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.FileNotFoundException;
 
 import org.domingus.app.Domingus;
+import org.domingus.init.DomingusFactory;
 import org.domingus.interfaces.Source;
 import org.domingus.ui.View;
 
 public class DomingusUITest {
 	
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException {
     	
     	View view = new View();
     	view.init();
     	
     	Source source = new SourceUIMock(1000);
-    	Domingus domingus = new Domingus(source);
+		DomingusFactory factory = new DomingusFactory();
+		Domingus domingus = factory.create(source, "src\\test\\resources\\extensions\\");
+
     	domingus.addObserver(view);
-    	
-    	try {
-    		domingus.init("src\\test\\resources\\extensions\\");
-		} catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException
-				| IllegalAccessException | InterruptedException | IOException e) {
-			e.printStackTrace();
-		}
+
 
     }
 
