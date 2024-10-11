@@ -12,7 +12,7 @@ public class SourceUIMock implements Source, Runnable {
     private Set<Observer> observers;
     private int version;
 
-    public SourceUIMock(Integer timeInterval) throws InterruptedException {
+    public SourceUIMock(Integer timeInterval) {
         observers = new HashSet<>();
         TimerUIMock timer = new TimerUIMock(timeInterval, this);
         Thread thread = new Thread(timer);
@@ -25,8 +25,13 @@ public class SourceUIMock implements Source, Runnable {
     }
 
     @Override
+    public void send(AcademicOffer academicOffer) {
+        observers.forEach((observer -> observer.update(academicOffer)));
+    }
+
+    @Override
     public void run() {
-        observers.forEach((observer -> observer.update(new AcademicOffer(version++))));
+        send(new AcademicOffer(version++));
     }
 
 }
