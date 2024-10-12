@@ -1,8 +1,14 @@
 package org.domingus.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -17,9 +23,10 @@ public class View implements Notifier {
 	private static String NAME = "DomngusUI";
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
+    private JFrame frame;
 
     public void init() {
-        JFrame frame = new JFrame("Domingus Chat");
+        frame = new JFrame("Domingus Chat");
         frame.setSize(400, 600);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -50,6 +57,40 @@ public class View implements Notifier {
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
 
+    public void setMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers) {
+    	
+        JMenuBar menuBar = new JMenuBar();
+        JMenu configMenu = new JMenu("Configuración");
+        JMenu useExtensionMenu = new JMenu("Usar extensión");
+
+        // Agregar todas las extensiones, habilitando solo las que no están en uso
+        for (String notifier : allNotifiers) {
+            JMenuItem extensionItem = new JMenuItem(notifier);
+
+            if (currentNotifiers.contains(notifier)) {
+                extensionItem.setEnabled(false);
+            
+            } else {
+
+            	extensionItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Use this extension: " + notifier);
+                    }
+                });
+            }
+
+            useExtensionMenu.add(extensionItem);
+        }
+
+        configMenu.add(useExtensionMenu);
+        menuBar.add(configMenu);
+        frame.setJMenuBar(menuBar);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    
     @Override
 	public void notify(String message) {
         showNotification(message, false);

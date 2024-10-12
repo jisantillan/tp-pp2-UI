@@ -1,6 +1,7 @@
 package org.domingus.test;
 
 import java.io.FileNotFoundException;
+import java.util.Set;
 
 import org.domingus.app.Domingus;
 import org.domingus.init.DomingusFactory;
@@ -23,7 +24,9 @@ public class DomingusUITest {
 
     	domingus.addNotifier(view);
     	domingus.addCurrentNotifier(view.getName());
-
+        Set<String> allExtensions = Set.of("Telegram", "WhatsApp", "Slack");
+        Set<String> usedExtensions = Set.of("Telegram");
+        view.setMenuBarWithExtensions(allExtensions, usedExtensions);
     }
 
 }
