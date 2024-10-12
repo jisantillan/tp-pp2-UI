@@ -57,7 +57,7 @@ public class View implements Notifier {
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
 
-    public void setMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers) {
+    public void setMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
     	
         JMenuBar menuBar = new JMenuBar();
         JMenu configMenu = new JMenu("Configuración");
@@ -75,7 +75,7 @@ public class View implements Notifier {
             	extensionItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Use this extension: " + notifier);
+                    	controller.useExtension(notifier);
                     }
                 });
             }
