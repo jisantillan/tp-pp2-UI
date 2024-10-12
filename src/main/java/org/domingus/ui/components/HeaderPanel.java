@@ -10,7 +10,7 @@ public class HeaderPanel extends JPanel {
     private static final String ICON_PATH = "images/Domingus.jpeg";
 
     public HeaderPanel(String chatName) {
-        this.chatName=chatName;
+        this.chatName = chatName;
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBackground(new Color(50, 115, 220));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

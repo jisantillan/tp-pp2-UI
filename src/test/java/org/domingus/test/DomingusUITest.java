@@ -10,13 +10,14 @@ import org.domingus.ui.View;
 public class DomingusUITest {
 	
 	private static String EXTENSIONS_PATH = "src\\test\\resources\\extensions\\";
+	private static Integer TIME_INTERVAL = 1000;
 	
     public static void main(String[] args) throws FileNotFoundException {
     	
     	View view = new View();
     	view.init();
     	
-    	Source source = new SourceUIMock(1000);
+    	Source source = new SourceUIMock(TIME_INTERVAL);
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(source, EXTENSIONS_PATH);
 
