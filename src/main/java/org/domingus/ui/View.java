@@ -14,6 +14,7 @@ import org.domingus.ui.components.MessagePanel;
 
 public class View implements Notifier {
 	
+	private static String NAME = "DomngusUI";
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
 
@@ -25,7 +26,7 @@ public class View implements Notifier {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Chat Header
-        HeaderPanel headerPanel=new HeaderPanel("Domingus Chat");
+        HeaderPanel headerPanel = new HeaderPanel("Domingus Chat");
 
         //Message Panel
         messagePanel = new MessagePanel();
@@ -51,8 +52,12 @@ public class View implements Notifier {
 
     @Override
 	public void notify(String message) {
-        //showNotification("Nueva notificación: " + message, false);
         showNotification(message, false);
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
 	}
 
 }

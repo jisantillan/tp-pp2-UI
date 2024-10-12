@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class HeaderPanel extends JPanel {
 
-
-    private final String chatName;
+	private static final long serialVersionUID = 1L;
+	private final String chatName;
     private static final String ICON_PATH = "images/Domingus.jpeg";
 
     public HeaderPanel(String chatName) {
@@ -43,7 +43,9 @@ public class HeaderPanel extends JPanel {
         } catch (Exception e) {
             // Si ocurre una excepción (por ejemplo, la imagen no se encuentra), dibuja un círculo
             profileIcon = new JLabel() {
-                @Override
+				private static final long serialVersionUID = 1L;
+
+				@Override
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     Graphics2D g2d = (Graphics2D) g;
@@ -60,12 +62,11 @@ public class HeaderPanel extends JPanel {
         return profileIcon;
     }
 
-
     private JLabel createChatTitle() {
         JLabel chatTitle = new JLabel(chatName);
         chatTitle.setForeground(Color.WHITE);
         chatTitle.setFont(new Font("Dialog", Font.BOLD, 18));
         return chatTitle;
     }
-}
 
+}

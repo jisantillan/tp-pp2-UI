@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InputPanel extends JPanel {
-    public InputPanel() {
+
+	private static final long serialVersionUID = 1L;
+
+	public InputPanel() {
         setLayout(new BorderLayout());
 
         JTextField textField = new JTextField();
@@ -16,5 +19,5 @@ public class InputPanel extends JPanel {
         add(textField, BorderLayout.CENTER);
         add(sendButton, BorderLayout.EAST);
     }
-}
 
+}
