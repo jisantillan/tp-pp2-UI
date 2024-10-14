@@ -1,14 +1,20 @@
 package org.domingus.ui.components;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
-import java.awt.*;
-
-import static javax.swing.text.StyleConstants.setBackground;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class MessagePanel extends JPanel {
-    public MessagePanel() {
+
+	private static final long serialVersionUID = 1L;
+
+	public MessagePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(Color.WHITE);
     }
@@ -30,4 +36,5 @@ public class MessagePanel extends JPanel {
         revalidate();
         repaint();
     }
+    
 }
