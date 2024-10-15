@@ -21,4 +21,16 @@ public class Controller {
     	);
 	}
 	
+	public void dropExtension(String name) {
+		// TODO Use the true method from Core when exist
+		//domingus.addCurrentNotifier(name);
+		System.out.println("Se ha retirado el medio de notificacion: " + name);
+    	
+		view.setMenuBarWithExtensions(
+    			domingus.getAllNotifiersNames(),
+    			domingus.getCurrentNotifiersNames(),
+    			this
+    	);
+	}
+	
 }

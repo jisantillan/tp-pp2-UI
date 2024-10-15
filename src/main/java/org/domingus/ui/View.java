@@ -20,7 +20,7 @@ import org.domingus.ui.components.MessagePanel;
 
 public class View implements Notifier {
 	
-	private static String NAME = "DomngusUI";
+	private static String NAME = "DomingusUI";
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
     private JFrame frame;
@@ -83,14 +83,36 @@ public class View implements Notifier {
             useExtensionMenu.add(extensionItem);
         }
 
+        JMenu dropExtensionMenu = new JMenu("Retirar extensión");
+
+        // Agregar todas las extensiones, habilitando solo las que están en uso
+        for (String notifier : allNotifiers) {
+            JMenuItem extensionItem = new JMenuItem(notifier);
+
+            if (!currentNotifiers.contains(notifier)) {
+                extensionItem.setEnabled(false);
+            
+            } else {
+
+            	extensionItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                    	controller.dropExtension(notifier);
+                    }
+                });
+            }
+
+            dropExtensionMenu.add(extensionItem);
+        }
+
         configMenu.add(useExtensionMenu);
+        configMenu.add(dropExtensionMenu);
         menuBar.add(configMenu);
         frame.setJMenuBar(menuBar);
         frame.revalidate();
         frame.repaint();
     }
 
-    
     @Override
 	public void notify(String message) {
         showNotification(message, false);
