@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class HeaderPanel extends JPanel {
 
+	private static final String ICON_PATH = "images/Domingus.jpeg";
 	private static final long serialVersionUID = 1L;
 	private final String chatName;
-    private static final String ICON_PATH = "images/Domingus.jpeg";
 
     public HeaderPanel(String chatName) {
         this.chatName = chatName;
