@@ -61,7 +61,7 @@ public class View implements Notifier {
     	
         JMenuBar menuBar = new JMenuBar();
         JMenu configMenu = new JMenu("Configuración");
-        JMenu useExtensionMenu = new JMenu("Usar extensión");
+        JMenu useExtensionMenu = new JMenu("Usar notificador");
 
         // Agregar todas las extensiones, habilitando solo las que no están en uso
         for (String notifier : allNotifiers) {
@@ -83,7 +83,7 @@ public class View implements Notifier {
             useExtensionMenu.add(extensionItem);
         }
 
-        JMenu dropExtensionMenu = new JMenu("Retirar extensión");
+        JMenu dropExtensionMenu = new JMenu("Retirar notificador");
 
         // Agregar todas las extensiones, habilitando solo las que están en uso
         for (String notifier : allNotifiers) {
