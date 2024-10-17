@@ -26,6 +26,7 @@ public class DomingusUITest {
 
     	domingus.addNotifier(view);
     	domingus.addCurrentNotifier(view.getName());
+    	
     	view.setMenuBarWithExtensions(domingus.getAllNotifiersNames(), domingus.getCurrentNotifiersNames(), controller);
         
     }

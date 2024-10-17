@@ -21,4 +21,15 @@ public class Controller {
     	);
 	}
 	
+	public void dropExtension(String name) {
+		domingus.removeCurrentNotifier(name);
+		System.out.println("Se ha retirado el medio de notificacion: " + name);
+    	
+		view.setMenuBarWithExtensions(
+    			domingus.getAllNotifiersNames(),
+    			domingus.getCurrentNotifiersNames(),
+    			this
+    	);
+	}
+	
 }
