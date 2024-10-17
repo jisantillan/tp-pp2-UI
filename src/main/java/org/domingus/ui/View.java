@@ -1,8 +1,6 @@
 package org.domingus.ui;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -13,33 +11,54 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 
+import org.domingus.app.Domingus;
 import org.domingus.interfaces.Notifier;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class View implements Notifier {
-	
-	private static String NAME = "DomingusUI";
+
+    private static final String DOMINGUS_CHAT_HEADER = "Domingus Chat";
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 600;
+    private static final String CONFIG_LBL = "Configuración";
+    private static final String USE_NOTIFIER_LBL = "Usar notificador";
+    private static final String REMOVE_NOTIFIER_LBL = "Retirar notificador";
+    private static String NAME = "DomingusUI";
     private MessagePanel messagePanel;
     private JScrollPane scrollPane;
     private JFrame frame;
 
+    private Controller controller;
+    private Domingus domingus;
+
+    public View(Domingus domingus) {
+        this.domingus = domingus;
+        this.controller = new Controller(domingus, this);
+        this.frame = new JFrame(DOMINGUS_CHAT_HEADER);
+        this.messagePanel = new MessagePanel();
+        this.scrollPane = new JScrollPane(messagePanel);
+    }
+
     public void init() {
-        frame = new JFrame("Domingus Chat");
-        frame.setSize(400, 600);
+        //El nombre del método es para hacerlo explicito nomás
+        this.suscribeToDomingus();
+
+        frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+        frame.setResizable(FALSE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Chat Header
-        HeaderPanel headerPanel = new HeaderPanel("Domingus Chat");
+        HeaderPanel headerPanel = new HeaderPanel(DOMINGUS_CHAT_HEADER);
 
         //Message Panel
-        messagePanel = new MessagePanel();
-        scrollPane = new JScrollPane(messagePanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // Panel de entrada de texto
         InputPanel inputPanel = new InputPanel();
@@ -48,74 +67,70 @@ public class View implements Notifier {
         frame.getContentPane().add(headerPanel, BorderLayout.NORTH);
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
-        frame.setVisible(true);
+        frame.setVisible(TRUE);
+
+        this.setMenuBarWithExtensions(domingus.getAllNotifiersNames(), domingus.getCurrentNotifiersNames(), controller);
     }
 
-    private void showNotification(String message, boolean isUser) {
+    private void suscribeToDomingus() {
+        this.domingus.addNotifier(this);
+        this.domingus.addCurrentNotifier(this.getName());
+    }
+
+    private void showNotification(String message, Boolean isUser) {
         messagePanel.addMessage(message, isUser);
         // Hacer que el scroll baje automáticamente hasta el último mensaje
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
 
     public void setMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
-    	
         JMenuBar menuBar = new JMenuBar();
-        JMenu configMenu = new JMenu("Configuración");
-        JMenu useExtensionMenu = new JMenu("Usar notificador");
+        JMenu configMenu = new JMenu(CONFIG_LBL);
 
-        // Agregar todas las extensiones, habilitando solo las que no están en uso
-        for (String notifier : allNotifiers) {
-            JMenuItem extensionItem = new JMenuItem(notifier);
-
-            if (currentNotifiers.contains(notifier)) {
-                extensionItem.setEnabled(false);
-            
-            } else {
-
-            	extensionItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                    	controller.useExtension(notifier);
-                    }
-                });
-            }
-
-            useExtensionMenu.add(extensionItem);
-        }
-
-        JMenu dropExtensionMenu = new JMenu("Retirar notificador");
-
-        // Agregar todas las extensiones, habilitando solo las que están en uso
-        for (String notifier : allNotifiers) {
-            JMenuItem extensionItem = new JMenuItem(notifier);
-
-            if (!currentNotifiers.contains(notifier)) {
-                extensionItem.setEnabled(false);
-            
-            } else {
-
-            	extensionItem.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                    	controller.dropExtension(notifier);
-                    }
-                });
-            }
-
-            dropExtensionMenu.add(extensionItem);
-        }
+        JMenu useExtensionMenu = getAddNotifierMenu(allNotifiers, currentNotifiers, controller);
+        JMenu dropExtensionMenu = getRemoveNotifierMenu(allNotifiers, currentNotifiers, controller);
 
         configMenu.add(useExtensionMenu);
         configMenu.add(dropExtensionMenu);
         menuBar.add(configMenu);
-        frame.setJMenuBar(menuBar);
-        frame.revalidate();
-        frame.repaint();
+        this.frame.setJMenuBar(menuBar);
+        this.frame.revalidate();
+        this.frame.repaint();
+    }
+
+    private JMenu getRemoveNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
+        JMenu dropExtensionMenu = new JMenu(REMOVE_NOTIFIER_LBL);
+
+        for (String notifier : allNotifiers) {
+            JMenuItem extensionItem = new JMenuItem(notifier);
+            if (!currentNotifiers.contains(notifier)) {
+                extensionItem.setEnabled(FALSE);
+            } else {
+            	extensionItem.addActionListener(e -> controller.dropExtension(notifier));
+            }
+            dropExtensionMenu.add(extensionItem);
+        }
+        return dropExtensionMenu;
+    }
+
+    private JMenu getAddNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
+        JMenu useExtensionMenu = new JMenu(USE_NOTIFIER_LBL);
+
+        for (String notifier : allNotifiers) {
+            JMenuItem extensionItem = new JMenuItem(notifier);
+            if (currentNotifiers.contains(notifier)) {
+                extensionItem.setEnabled(FALSE);
+            } else {
+            	extensionItem.addActionListener(e -> controller.useExtension(notifier));
+            }
+            useExtensionMenu.add(extensionItem);
+        }
+        return useExtensionMenu;
     }
 
     @Override
 	public void notify(String message) {
-        showNotification(message, false);
+        showNotification(message, FALSE);
 	}
 
 	@Override
