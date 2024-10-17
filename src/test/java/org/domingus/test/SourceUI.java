@@ -7,14 +7,14 @@ import org.domingus.app.AcademicOffer;
 import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.Source;
 
-public class SourceUIMock implements Source, Runnable {
+public class SourceUI implements Source, Runnable {
 
     private Set<Observer> observers;
     private int version;
 
-    public SourceUIMock(Integer timeInterval) {
+    public SourceUI(Integer timeInterval) {
         observers = new HashSet<>();
-        TimerUIMock timer = new TimerUIMock(timeInterval, this);
+        TimerUI timer = new TimerUI(timeInterval, this);
         Thread thread = new Thread(timer);
         thread.start();
     }

@@ -1,11 +1,11 @@
 package org.domingus.test;
 
-public class TimerUIMock implements Runnable {
+public class TimerUI implements Runnable {
 	
     private Integer timeInterval;
     private Runnable runnable;
 
-    public TimerUIMock(Integer timeInterval, Runnable runnable) {
+    public TimerUI(Integer timeInterval, Runnable runnable) {
     	this.runnable = runnable;
         this.timeInterval = timeInterval;
     }
