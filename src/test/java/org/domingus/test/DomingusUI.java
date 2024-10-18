@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import org.domingus.app.Domingus;
 import org.domingus.init.DomingusFactory;
 import org.domingus.interfaces.Source;
-import org.domingus.ui.View;
+import org.domingus.ui.DomingusView;
 
 public class DomingusUI {
 	
@@ -17,8 +17,8 @@ public class DomingusUI {
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(source, EXTENSIONS_PATH);
 
-		View view = new View(domingus);
-		view.init();
+		DomingusView domingusView = new DomingusView(domingus);
+		domingusView.init();
     }
 
 }

@@ -3,21 +3,19 @@ package org.domingus.ui;
 import org.domingus.app.Domingus;
 import org.domingus.interfaces.Observer;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-public class Controller {
+public class DomingusController {
 	
 	private Domingus domingus;
-	private View view;
+	private DomingusView domingusView;
 
 
-	public Controller(Domingus domingus, View view) {
+	public DomingusController(Domingus domingus, DomingusView domingusView) {
 		this.domingus = domingus;
-		this.view = view;
+		this.domingusView = domingusView;
 	}
 	
 	public void useExtension(String name) {
@@ -32,7 +30,7 @@ public class Controller {
 	}
 
 	private void updateExtensionsBar() {
-		view.updateMenuBarWithExtensions(getNames(domingus.getNotifiers()), getNames(domingus.getCurrentNotifiers()));
+		domingusView.updateMenuBarWithExtensions(getNames(domingus.getNotifiers()), getNames(domingus.getCurrentNotifiers()));
 	}
 
 	public Set<String> getNames(Set<Observer> observers){

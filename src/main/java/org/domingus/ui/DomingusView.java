@@ -12,7 +12,6 @@ import javax.swing.SwingUtilities;
 
 
 import org.domingus.app.Domingus;
-import org.domingus.interfaces.Notifier;
 import org.domingus.interfaces.Observer;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
@@ -21,7 +20,7 @@ import org.domingus.ui.components.MessagePanel;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class View implements Observer {
+public class DomingusView implements Observer {
 
     private static final String DOMINGUS_CHAT_HEADER = "Domingus Chat";
     private static final int WIDTH = 400;
@@ -34,12 +33,12 @@ public class View implements Observer {
     private JScrollPane scrollPane;
     private JFrame frame;
 
-    private Controller controller;
+    private DomingusController domingusController;
     private Domingus domingus;
 
-    public View(Domingus domingus) {
+    public DomingusView(Domingus domingus) {
         this.domingus = domingus;
-        this.controller = new Controller(domingus, this);
+        this.domingusController = new DomingusController(domingus, this);
         this.frame = new JFrame(DOMINGUS_CHAT_HEADER);
         this.messagePanel = new MessagePanel();
         this.scrollPane = new JScrollPane(messagePanel);
@@ -70,7 +69,7 @@ public class View implements Observer {
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         frame.setVisible(TRUE);
 
-        this.updateMenuBarWithExtensions(controller.getNames(domingus.getNotifiers()), controller.getNames(domingus.getCurrentNotifiers()));
+        this.updateMenuBarWithExtensions(domingusController.getNames(domingus.getNotifiers()), domingusController.getNames(domingus.getCurrentNotifiers()));
     }
 
     private void suscribeToDomingus() {
@@ -108,7 +107,7 @@ public class View implements Observer {
             if (!currentNotifiers.contains(notifier)) {
                 extensionItem.setEnabled(FALSE);
             } else {
-            	extensionItem.addActionListener(e -> controller.dropExtension(notifier));
+            	extensionItem.addActionListener(e -> domingusController.dropExtension(notifier));
             }
             dropExtensionMenu.add(extensionItem);
         }
@@ -123,7 +122,7 @@ public class View implements Observer {
             if (currentNotifiers.contains(notifier)) {
                 extensionItem.setEnabled(FALSE);
             } else {
-            	extensionItem.addActionListener(e -> controller.useExtension(notifier));
+            	extensionItem.addActionListener(e -> domingusController.useExtension(notifier));
             }
             useExtensionMenu.add(extensionItem);
         }
