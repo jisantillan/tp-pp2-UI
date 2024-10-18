@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import org.domingus.app.Domingus;
 import org.domingus.interfaces.Notifier;
+import org.domingus.interfaces.Observer;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
@@ -20,7 +21,7 @@ import org.domingus.ui.components.MessagePanel;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-public class View implements Notifier {
+public class View implements Observer {
 
     private static final String DOMINGUS_CHAT_HEADER = "Domingus Chat";
     private static final int WIDTH = 400;
@@ -69,12 +70,12 @@ public class View implements Notifier {
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         frame.setVisible(TRUE);
 
-        this.setMenuBarWithExtensions(domingus.getAllNotifiersNames(), domingus.getCurrentNotifiersNames(), controller);
+        this.updateMenuBarWithExtensions(controller.getNames(domingus.getNotifiers()), controller.getNames(domingus.getCurrentNotifiers()));
     }
 
     private void suscribeToDomingus() {
-        this.domingus.addNotifier(this);
-        this.domingus.addCurrentNotifier(this.getName());
+        this.domingus.addObserver(this);
+        this.domingus.addCurrentObserver(this);
     }
 
     private void showNotification(String message, Boolean isUser) {
@@ -83,12 +84,13 @@ public class View implements Notifier {
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
 
-    public void setMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
+    //Para recibir los observers del controlador
+    public void updateMenuBarWithExtensions(Set<String> allNotifiers, Set<String> currentNotifiers) {
         JMenuBar menuBar = new JMenuBar();
         JMenu configMenu = new JMenu(CONFIG_LBL);
 
-        JMenu useExtensionMenu = getAddNotifierMenu(allNotifiers, currentNotifiers, controller);
-        JMenu dropExtensionMenu = getRemoveNotifierMenu(allNotifiers, currentNotifiers, controller);
+        JMenu useExtensionMenu = getAddNotifierMenu(allNotifiers, currentNotifiers);
+        JMenu dropExtensionMenu = getRemoveNotifierMenu(allNotifiers, currentNotifiers);
 
         configMenu.add(useExtensionMenu);
         configMenu.add(dropExtensionMenu);
@@ -98,7 +100,7 @@ public class View implements Notifier {
         this.frame.repaint();
     }
 
-    private JMenu getRemoveNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
+    private JMenu getRemoveNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers) {
         JMenu dropExtensionMenu = new JMenu(REMOVE_NOTIFIER_LBL);
 
         for (String notifier : allNotifiers) {
@@ -113,7 +115,7 @@ public class View implements Notifier {
         return dropExtensionMenu;
     }
 
-    private JMenu getAddNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers, Controller controller) {
+    private JMenu getAddNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers) {
         JMenu useExtensionMenu = new JMenu(USE_NOTIFIER_LBL);
 
         for (String notifier : allNotifiers) {
@@ -129,13 +131,7 @@ public class View implements Notifier {
     }
 
     @Override
-	public void notify(String message) {
-        showNotification(message, FALSE);
-	}
-
-	@Override
-	public String getName() {
-		return NAME;
-	}
-
+    public void update(Object message) {
+        showNotification((String) message, FALSE);
+    }
 }
