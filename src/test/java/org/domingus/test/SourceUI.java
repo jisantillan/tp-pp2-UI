@@ -3,7 +3,7 @@ package org.domingus.test;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.domingus.app.AcademicOffer;
+import org.domingus.app.ClassroomAssignment;
 import org.domingus.interfaces.Observer;
 import org.domingus.interfaces.Source;
 
@@ -25,13 +25,13 @@ public class SourceUI implements Source, Runnable {
     }
 
     @Override
-    public void send(AcademicOffer academicOffer) {
-        observers.forEach((observer -> observer.update(academicOffer)));
+    public void send(ClassroomAssignment classroomAssignment) {
+        observers.forEach((observer -> observer.update(classroomAssignment)));
     }
 
     @Override
     public void run() {
-        send(new AcademicOffer(version++));
+        send(new ClassroomAssignment(version++));
     }
 
 }
