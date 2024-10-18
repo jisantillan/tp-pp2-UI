@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.jisantillan</groupId>
             <artifactId>tp-pp2-core</artifactId>
-            <version>iteracion-0-9f2efecfd3-1</version>
+            <version>iteracion-0-24ffea37ee-1</version>
         </dependency>
        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
