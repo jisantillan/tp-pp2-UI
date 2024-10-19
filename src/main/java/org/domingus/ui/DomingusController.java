@@ -2,6 +2,7 @@ package org.domingus.ui;
 
 import org.domingus.app.Domingus;
 import org.domingus.interfaces.Observer;
+import org.domingus.ui.components.NotifierFilter;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,16 +31,17 @@ public class DomingusController {
 	}
 
 	private void updateExtensionsBar() {
-		domingusView.updateMenuBarWithExtensions(getNames(domingus.getNotifiers()), getNames(domingus.getCurrentNotifiers()));
-	}
+		NotifierFilter notifierFilter = new NotifierFilter();
+		Set<Observer> allNotifiers = notifierFilter.getNotifiers(domingus.getObservers());
+		Set<Observer> currentNotifiers = notifierFilter.getNotifiers(domingus.getCurrentObservers());
 
-	public Set<String> getNames(Set<Observer> observers){
-		return observers.stream().map(notifier -> notifier.getClass().getSimpleName()).collect(Collectors.toSet());
+		domingusView.updateMenuBarWithExtensions(notifierFilter.getNames(allNotifiers), notifierFilter.getNames(currentNotifiers));
 	}
 
 	public Observer getObserver(String name){
 		Observer observer = null;
-		for (Observer notifier : domingus.getNotifiers()) {
+		Set<Observer> notifiers = new NotifierFilter().getNotifiers(domingus.getObservers());
+		for (Observer notifier : notifiers) {
 			if (notifier.getClass().getSimpleName().equals(name)){
 				observer=notifier;
 				break;

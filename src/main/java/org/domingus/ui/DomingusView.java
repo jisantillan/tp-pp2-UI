@@ -16,6 +16,7 @@ import org.domingus.interfaces.Observer;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
+import org.domingus.ui.components.NotifierFilter;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -69,7 +70,11 @@ public class DomingusView implements Observer {
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         frame.setVisible(TRUE);
 
-        this.updateMenuBarWithExtensions(domingusController.getNames(domingus.getNotifiers()), domingusController.getNames(domingus.getCurrentNotifiers()));
+        NotifierFilter notifierFilter = new NotifierFilter();
+        Set<Observer> allNotifiers = notifierFilter.getNotifiers(domingus.getObservers());
+        Set<Observer> currentNotifiers = notifierFilter.getNotifiers(domingus.getCurrentObservers());
+
+        this.updateMenuBarWithExtensions(notifierFilter.getNames(allNotifiers), notifierFilter.getNames(currentNotifiers));
     }
 
     private void suscribeToDomingus() {
