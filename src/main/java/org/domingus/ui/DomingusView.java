@@ -29,13 +29,12 @@ public class DomingusView implements Observer {
     private static final String CONFIG_LBL = "Configuración";
     private static final String USE_NOTIFIER_LBL = "Usar notificador";
     private static final String REMOVE_NOTIFIER_LBL = "Retirar notificador";
-    private static String NAME = "DomingusUI";
-    private MessagePanel messagePanel;
-    private JScrollPane scrollPane;
-    private JFrame frame;
+    private final MessagePanel messagePanel;
+    private final JScrollPane scrollPane;
+    private final JFrame frame;
 
-    private DomingusController domingusController;
-    private Domingus domingus;
+    private final DomingusController domingusController;
+    private final Domingus domingus;
 
     public DomingusView(Domingus domingus) {
         this.domingus = domingus;
@@ -82,8 +81,8 @@ public class DomingusView implements Observer {
         this.domingus.addCurrentObserver(this);
     }
 
-    private void showNotification(String message, Boolean isUser) {
-        messagePanel.addMessage(message, isUser);
+    private void showNotification(String message) {
+        messagePanel.addMessage(message, FALSE);
         // Hacer que el scroll baje automáticamente hasta el último mensaje
         SwingUtilities.invokeLater(() -> scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum()));
     }
@@ -107,35 +106,37 @@ public class DomingusView implements Observer {
     private JMenu getRemoveNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers) {
         JMenu dropExtensionMenu = new JMenu(REMOVE_NOTIFIER_LBL);
 
-        for (String notifier : allNotifiers) {
+        allNotifiers.forEach(notifier -> {
             JMenuItem extensionItem = new JMenuItem(notifier);
             if (!currentNotifiers.contains(notifier)) {
                 extensionItem.setEnabled(FALSE);
             } else {
-            	extensionItem.addActionListener(e -> domingusController.dropExtension(notifier));
+                extensionItem.addActionListener(e -> domingusController.dropExtension(notifier));
             }
             dropExtensionMenu.add(extensionItem);
-        }
+        });
+
         return dropExtensionMenu;
     }
 
     private JMenu getAddNotifierMenu(Set<String> allNotifiers, Set<String> currentNotifiers) {
         JMenu useExtensionMenu = new JMenu(USE_NOTIFIER_LBL);
 
-        for (String notifier : allNotifiers) {
+        allNotifiers.forEach(notifier -> {
             JMenuItem extensionItem = new JMenuItem(notifier);
             if (currentNotifiers.contains(notifier)) {
                 extensionItem.setEnabled(FALSE);
             } else {
-            	extensionItem.addActionListener(e -> domingusController.useExtension(notifier));
+                extensionItem.addActionListener(e -> domingusController.useExtension(notifier));
             }
             useExtensionMenu.add(extensionItem);
-        }
+        });
+
         return useExtensionMenu;
     }
 
     @Override
     public void update(Object message) {
-        showNotification((String) message, FALSE);
+        showNotification((String) message);
     }
 }
