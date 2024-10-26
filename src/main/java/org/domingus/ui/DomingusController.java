@@ -4,12 +4,10 @@ import java.util.Set;
 
 import org.domingus.app.Domingus;
 
-
 public class DomingusController {
 	
 	private Domingus domingus;
 	private DomingusView domingusView;
-
 
 	public DomingusController(Domingus domingus, DomingusView domingusView) {
 		this.domingus = domingus;
@@ -18,13 +16,13 @@ public class DomingusController {
 	
 	public void useExtension(String name) {
 		domingus.addCurrentObserver(name);
-		System.out.println("Se ha agregado el medio de notificacion: " + name);
+		System.out.println("Se ha agregado el medio de notificación: " + name);
 		updateExtensionsBar();
 	}
 	
 	public void dropExtension(String name) {
 		domingus.removeCurrentObserver(name);
-		System.out.println("Se ha retirado el medio de notificacion: " + name);
+		System.out.println("Se ha retirado el medio de notificación: " + name);
 		updateExtensionsBar();
 	}
 
