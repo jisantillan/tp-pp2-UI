@@ -17,23 +17,20 @@ public class DomingusController {
 	}
 	
 	public void useExtension(String name) {
-		// TODO: Usar nuevo metodo de domingus
-		// domingus.addCurrentObserver(name);
+		domingus.addCurrentObserver(name);
 		System.out.println("Se ha agregado el medio de notificacion: " + name);
 		updateExtensionsBar();
 	}
 	
 	public void dropExtension(String name) {
-		// TODO: Usar nuevo metodo de domingus
-		// domingus.removeCurrentObserver(name);
+		domingus.removeCurrentObserver(name);
 		System.out.println("Se ha retirado el medio de notificacion: " + name);
 		updateExtensionsBar();
 	}
 
 	private void updateExtensionsBar() {
-		// TODO: Usar nuevo metodo de domingus
-		Set<String> allNames = null; 
-		Set<String> currentNames = null; 
+		Set<String> allNames = domingus.getAllObserversNames();
+		Set<String> currentNames = domingus.getCurrentObserversNames();
 		domingusView.updateMenuBarWithExtensions(allNames, currentNames);
 	}
 
