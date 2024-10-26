@@ -10,7 +10,7 @@ import org.domingus.ui.DomingusView;
 public class DomingusUI {
 	
 	private static String EXTENSIONS_PATH = "src\\test\\resources\\extensions\\";
-	private static Integer TIME_INTERVAL = 1000;
+	private static Integer TIME_INTERVAL = 2000;
 	
     public static void main(String[] args) throws FileNotFoundException {
 		Source source = new SourceUI(TIME_INTERVAL);
