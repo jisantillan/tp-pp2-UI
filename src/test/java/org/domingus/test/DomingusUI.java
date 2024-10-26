@@ -13,12 +13,15 @@ public class DomingusUI {
 	private static Integer TIME_INTERVAL = 2000;
 	
     public static void main(String[] args) throws FileNotFoundException {
-		Source source = new SourceUI(TIME_INTERVAL);
+		Source source = new SourceUI();
+		TimerUI timer = new TimerUI(TIME_INTERVAL, (Runnable) source);
 		DomingusFactory factory = new DomingusFactory();
 		Domingus domingus = factory.create(source, EXTENSIONS_PATH);
 
 		DomingusView domingusView = new DomingusView(domingus);
 		domingusView.init();
+
+		timer.run();
     }
 
 }
