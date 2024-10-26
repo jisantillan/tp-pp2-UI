@@ -1,11 +1,8 @@
 package org.domingus.ui;
 
-import org.domingus.app.Domingus;
-import org.domingus.interfaces.Observer;
-import org.domingus.ui.components.NotifierFilter;
-
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import org.domingus.app.Domingus;
 
 
 public class DomingusController {
@@ -20,33 +17,24 @@ public class DomingusController {
 	}
 	
 	public void useExtension(String name) {
-		domingus.addCurrentObserver(getObserver(name));
+		// TODO: Usar nuevo metodo de domingus
+		// domingus.addCurrentObserver(name);
+		System.out.println("Se ha agregado el medio de notificacion: " + name);
 		updateExtensionsBar();
 	}
 	
 	public void dropExtension(String name) {
-		domingus.removeCurrentObserver(getObserver(name));
+		// TODO: Usar nuevo metodo de domingus
+		// domingus.removeCurrentObserver(name);
 		System.out.println("Se ha retirado el medio de notificacion: " + name);
 		updateExtensionsBar();
 	}
 
 	private void updateExtensionsBar() {
-		NotifierFilter notifierFilter = new NotifierFilter();
-		Set<Observer> allNotifiers = notifierFilter.getNotifiers(domingus.getObservers());
-		Set<Observer> currentNotifiers = notifierFilter.getNotifiers(domingus.getCurrentObservers());
-
-		domingusView.updateMenuBarWithExtensions(notifierFilter.getNames(allNotifiers), notifierFilter.getNames(currentNotifiers));
+		// TODO: Usar nuevo metodo de domingus
+		Set<String> allNames = null; 
+		Set<String> currentNames = null; 
+		domingusView.updateMenuBarWithExtensions(allNames, currentNames);
 	}
 
-	public Observer getObserver(String name){
-		Observer observer = null;
-		Set<Observer> notifiers = new NotifierFilter().getNotifiers(domingus.getObservers());
-		for (Observer notifier : notifiers) {
-			if (notifier.getClass().getSimpleName().equals(name)){
-				observer=notifier;
-				break;
-			}
-		}
-		return observer;
-	}
 }

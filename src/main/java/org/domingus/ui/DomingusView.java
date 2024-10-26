@@ -1,5 +1,8 @@
 package org.domingus.ui;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import java.awt.BorderLayout;
 import java.util.Set;
 
@@ -10,16 +13,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-
 import org.domingus.app.Domingus;
 import org.domingus.interfaces.Observer;
 import org.domingus.ui.components.HeaderPanel;
 import org.domingus.ui.components.InputPanel;
 import org.domingus.ui.components.MessagePanel;
-import org.domingus.ui.components.NotifierFilter;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 public class DomingusView implements Observer {
 
@@ -69,11 +67,10 @@ public class DomingusView implements Observer {
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         frame.setVisible(TRUE);
 
-        NotifierFilter notifierFilter = new NotifierFilter();
-        Set<Observer> allNotifiers = notifierFilter.getNotifiers(domingus.getObservers());
-        Set<Observer> currentNotifiers = notifierFilter.getNotifiers(domingus.getCurrentObservers());
-
-        this.updateMenuBarWithExtensions(notifierFilter.getNames(allNotifiers), notifierFilter.getNames(currentNotifiers));
+		// TODO: Usar nuevo metodo de domingus
+		Set<String> allNames = null; 
+		Set<String> currentNames = null; 
+        this.updateMenuBarWithExtensions(allNames, currentNames);
     }
 
     private void suscribeToDomingus() {
@@ -139,4 +136,5 @@ public class DomingusView implements Observer {
     public void update(Object message) {
         showNotification((String) message);
     }
+    
 }
