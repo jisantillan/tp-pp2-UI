@@ -27,8 +27,7 @@ public class DomingusUI {
 		Logger logger = loggerFactory.create(MEMORY_PATH);
 
 		domingus.addObserver(logger);
-		domingus.addCurrentObserver(logger.getClass().getSimpleName());
-		
+
 		DomingusView domingusView = new DomingusView(domingus);
 		domingusView.init();
 
