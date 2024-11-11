@@ -26,7 +26,7 @@ public class DomingusController {
 		updateExtensionsBar();
 	}
 
-	private void updateExtensionsBar() {
+	public void updateExtensionsBar() {
 		Set<String> allNames = domingus.getAllObserversNames();
 		Set<String> currentNames = domingus.getCurrentObserversNames();
 		domingusView.updateMenuBarWithExtensions(allNames, currentNames);

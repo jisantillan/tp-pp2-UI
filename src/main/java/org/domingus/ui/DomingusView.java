@@ -67,10 +67,7 @@ public class DomingusView implements Observer {
         frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         frame.setVisible(TRUE);
 
-		Set<String> allNames = domingus.getAllObserversNames();
-		Set<String> currentNames = domingus.getCurrentObserversNames();
-
-        this.updateMenuBarWithExtensions(allNames, currentNames);
+	    domingusController.updateExtensionsBar();
     }
 
     private void suscribeToDomingus() {

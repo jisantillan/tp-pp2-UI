@@ -11,7 +11,7 @@ import org.domingus.ui.DomingusView;
 
 import static java.util.Objects.nonNull;
 
-public class DomingusUI {
+public class Main {
 
 	private static String EXTENSIONS_PATH = "src\\test\\resources\\extensions\\";
 	private static String MEMORY_PATH = "src\\test\\resources\\memory.txt";
